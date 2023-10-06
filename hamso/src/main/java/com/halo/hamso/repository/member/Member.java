@@ -1,12 +1,10 @@
 package com.halo.hamso.repository.member;
 
 
+import com.halo.hamso.dto.member.signup.SignUpReqDto;
 import com.halo.hamso.repository.family.FamilyGroup;
 import com.halo.hamso.repository.funeral.Funeral;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,12 +35,18 @@ public class Member {
     @Column(nullable = false)
     private String relation;
 
-    @Column(nullable = false)
-    private String affiliation;
 
     @OneToMany(mappedBy = "member")
     private List<FamilyGroup> familyGroups= new ArrayList<FamilyGroup>();
 
     @OneToMany(mappedBy = "member")
     private List<Funeral> funeralList = new ArrayList<Funeral>();
+
+    @Builder
+    public Member(SignUpReqDto signUpReqDto) {
+        this.name = signUpReqDto.getName();
+        this.phoneNo = signUpReqDto.getPhoneNo();
+        this.password = signUpReqDto.getPassword();
+        this.relation = signUpReqDto.getRelation();
+    }
 }
