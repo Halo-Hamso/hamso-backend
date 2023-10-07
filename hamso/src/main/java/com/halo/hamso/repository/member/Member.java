@@ -2,6 +2,7 @@ package com.halo.hamso.repository.member;
 
 
 import com.halo.hamso.dto.member.signup.SignUpReqDto;
+import com.halo.hamso.repository.Authority.Authority;
 import com.halo.hamso.repository.family.FamilyGroup;
 import com.halo.hamso.repository.funeral.Funeral;
 import lombok.*;
@@ -43,10 +44,24 @@ public class Member {
     private List<Funeral> funeralList = new ArrayList<Funeral>();
 
     @Builder
-    public Member(SignUpReqDto signUpReqDto) {
-        this.name = signUpReqDto.getName();
-        this.phoneNo = signUpReqDto.getPhoneNo();
-        this.password = signUpReqDto.getPassword();
-        this.relation = signUpReqDto.getRelation();
+    public Member(String name, String phoneNo, String password, String relation) {
+        this.name = name;
+        this.phoneNo = phoneNo;
+        this.password = password;
+        this.relation = relation;
+    }
+
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Authority> roles = new ArrayList<>();
+
+
+    public void setRoles(List<Authority> roles) {
+
+        this.roles = roles;
+        roles.forEach(o -> o.setMember(this));
+    }
+    public void setPassword(String password){
+        this.password=password;
     }
 }
