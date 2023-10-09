@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.webjars.NotFoundException;
 
-@Tag(name = "회원가입", description = "회원가입, 로그인, 비밀번호 찾기, 아이디 중복 검사")
+@Tag(name = "회원 인증 API", description = "회원가입, 로그인, 비밀번호 찾기, 아이디 중복 검사")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
