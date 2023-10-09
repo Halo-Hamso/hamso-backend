@@ -58,6 +58,9 @@ public class SecurityConfig {
                 // 로그인 회원가입은 누구나 가능하다.
                 .antMatchers("/auth/login","/auth/signup").permitAll()
 
+                // 문자 인증 번호 발생은 누구나 가능
+                .antMatchers("/sms/send").permitAll()
+
                 // /admin으로 시작하는 요청은 ADMIN 권한이 있는 유저에게만 허용
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
