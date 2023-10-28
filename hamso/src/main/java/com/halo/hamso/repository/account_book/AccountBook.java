@@ -33,7 +33,8 @@ public class AccountBook extends AuditingField {
     private Integer totalMoney;
 
 
-    @OneToOne(mappedBy = "accountBook")
+    @JoinColumn(name = "memberId")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @OneToMany(mappedBy = "accountBook", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -40,9 +40,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Funeral> funeralList = new ArrayList<Funeral>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "accountBookId")
-    private AccountBook accountBook;
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<AccountBook> accountBook = new ArrayList<>();
 
 
     @Builder
@@ -54,7 +53,7 @@ public class Member {
     }
 
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Authority> roles = new ArrayList<>();
 
 
@@ -64,9 +63,9 @@ public class Member {
         roles.forEach(o -> o.setMember(this));
     }
 
-    public void setAccountBook(AccountBook accountBook){
+    public void setAccountBook(List<AccountBook> accountBook){
         this.accountBook = accountBook;
-        accountBook.setMember(this);
+        accountBook.forEach(o->o.setMember(this));
     }
     public void setPassword(String password){
         this.password=password;

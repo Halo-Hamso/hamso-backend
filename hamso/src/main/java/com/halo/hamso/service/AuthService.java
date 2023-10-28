@@ -50,7 +50,7 @@ public class AuthService {
 
         //리스트에 요소 하나만 넣는 것
         member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
-        member.setAccountBook(AccountBook.builder().totalMoney(0).build());
+        member.setAccountBook(Collections.singletonList(AccountBook.builder().totalMoney(0).build()));
 
         memberRepository.save(member);
 
