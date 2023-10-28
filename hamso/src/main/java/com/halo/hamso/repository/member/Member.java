@@ -3,6 +3,7 @@ package com.halo.hamso.repository.member;
 
 
 import com.halo.hamso.repository.Authority.Authority;
+import com.halo.hamso.repository.account_book.AccountBook;
 import com.halo.hamso.repository.funeral.Funeral;
 import lombok.*;
 
@@ -39,6 +40,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Funeral> funeralList = new ArrayList<Funeral>();
 
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<AccountBook> accountBook = new ArrayList<>();
+
+
     @Builder
     public Member(String name, String phoneNo, String password, String relation) {
         this.name = name;
@@ -56,6 +61,11 @@ public class Member {
 
         this.roles = roles;
         roles.forEach(o -> o.setMember(this));
+    }
+
+    public void setAccountBook(List<AccountBook> accountBook){
+        this.accountBook = accountBook;
+        accountBook.forEach(o->o.setMember(this));
     }
     public void setPassword(String password){
         this.password=password;
