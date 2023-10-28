@@ -25,6 +25,8 @@ import org.webjars.NotFoundException;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
+
     private final AuthService authService;
 
     /** 회원가입  */

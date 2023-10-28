@@ -1,9 +1,8 @@
 package com.halo.hamso.repository.member;
 
 
-import com.halo.hamso.dto.member.signup.SignUpReqDto;
+
 import com.halo.hamso.repository.Authority.Authority;
-import com.halo.hamso.repository.family.FamilyGroup;
 import com.halo.hamso.repository.funeral.Funeral;
 import lombok.*;
 
@@ -36,9 +35,6 @@ public class Member {
     @Column(nullable = false)
     private String relation;
 
-
-    @OneToMany(mappedBy = "member")
-    private List<FamilyGroup> familyGroups= new ArrayList<FamilyGroup>();
 
     @OneToMany(mappedBy = "member")
     private List<Funeral> funeralList = new ArrayList<Funeral>();
