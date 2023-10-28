@@ -9,6 +9,7 @@ import com.halo.hamso.dto.member.login.LoginResDto;
 import com.halo.hamso.dto.member.signup.SignUpReqDto;
 import com.halo.hamso.dto.member.signup.SignUpResDto;
 import com.halo.hamso.repository.Authority.Authority;
+import com.halo.hamso.repository.account_book.AccountBook;
 import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import com.halo.hamso.utils.jwt.JwtProvider;
@@ -38,6 +39,8 @@ public class AuthService {
             throw new MemberDuplicateException(signUpReqDto.getPhoneNo()+"는 이미 존재하는 번호입니다.");
         }
 
+
+
         Member member=Member.builder()
                 .name(signUpReqDto.getName())
                 .password(encoder.encode(signUpReqDto.getPassword()))
@@ -47,6 +50,7 @@ public class AuthService {
 
         //리스트에 요소 하나만 넣는 것
         member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
+        member.setAccountBook(AccountBook.builder().totalMoney(0).build());
 
         memberRepository.save(member);
 
@@ -70,6 +74,7 @@ public class AuthService {
         }
 
         return LoginResDto.builder()
+                .memberId(member.getId())
                 .name(member.getName())
                 .phoneNo(memberInfo.getPhoneNo())
                 .token(jwtProvider.createToken(member.getPhoneNo(),member.getRoles()))

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class LoginResDto {
+    private Long memberId;
     private String phoneNo;
     private String name;
     private String token;
