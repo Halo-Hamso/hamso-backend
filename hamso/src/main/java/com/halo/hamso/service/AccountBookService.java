@@ -3,6 +3,7 @@ package com.halo.hamso.service;
 
 import com.halo.hamso.dto.PageInfo;
 import com.halo.hamso.dto.account_book.AccountInfoPageResDto;
+import com.halo.hamso.dto.account_book.AccountInfoReqDto;
 import com.halo.hamso.dto.account_book.AccountInfoResDto;
 import com.halo.hamso.repository.account_book.AccountInfoRepository;
 import com.halo.hamso.repository.account_info.AccountInfo;
@@ -28,7 +29,23 @@ public class AccountBookService {
 
 
     /**  조문객 조의금 db 저장  */
+    public String registerInfo(AccountInfoReqDto accountInfoReqDto) throws NotFoundException{
+        Member member =memberRepository.findById(accountInfoReqDto.getMemberId())
+                .orElseThrow(()->new NotFoundException("회원을 찾을 수 없습니다."));
 
+        AccountInfo accountInfo = AccountInfo.builder()
+                .name(accountInfoReqDto.getName())
+                .money(accountInfoReqDto.getMoney())
+                .team(accountInfoReqDto.getTeam())
+                .visitedTo(accountInfoReqDto.getVisitedTo())
+                .relation(accountInfoReqDto.getRelation())
+                .accountBook(member.getAccountBook().get(0))
+                .build();
+
+        accountInfoRepository.save(accountInfo);
+        return "부의금 데이터 저장 성공";
+
+    }
 
 
     /**  가계부 페이징 조회  */
