@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-@Slf4j
 public class AccountBookService {
 
     private final AccountInfoRepository accountInfoRepository;
@@ -56,7 +55,6 @@ public class AccountBookService {
 
         Page<AccountInfo> infos;
         // 검색 x
-        log.info("data:{}", member.getAccountBook().get(0).getId());
         if(s==null){
             infos = accountInfoRepository.findAllByAccountBook(member.getAccountBook().get(0),PageRequest.of(page,size));
         }

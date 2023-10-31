@@ -9,7 +9,7 @@ import com.halo.hamso.dto.member.login.LoginResDto;
 import com.halo.hamso.dto.member.signup.SignUpReqDto;
 import com.halo.hamso.dto.member.signup.SignUpResDto;
 import com.halo.hamso.service.AuthService;
-import com.halo.hamso.utils.swagger.Auth.*;
+import com.halo.hamso.utils.swagger.auth.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
