@@ -1,4 +1,4 @@
-package com.halo.hamso.utils.swagger.Auth;
+package com.halo.hamso.utils.swagger.auth;
 
 
 import com.halo.hamso.dto.member.signup.SignUpReqDto;

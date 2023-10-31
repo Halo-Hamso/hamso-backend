@@ -1,8 +1,7 @@
-package com.halo.hamso.utils.swagger.Auth;
+package com.halo.hamso.utils.swagger.auth;
 
 
 import com.halo.hamso.dto.member.login.LoginReqDto;
-import com.halo.hamso.dto.member.signup.SignUpReqDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
