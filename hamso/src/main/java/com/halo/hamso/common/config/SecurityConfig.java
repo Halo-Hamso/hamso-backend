@@ -117,8 +117,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // 모든 도메인으로부터의 요청을 허용함
-        configuration.setAllowedOrigins(Arrays.asList("*")); // 모든 도메인 허용
-
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://59.79.207.32", "http://52.79.207.32", "http://59.79.207.32:9999",
+                "http://52.79.207.32:9999", "https://52.79.207.32:9999"));
         // 모든 헤더를 허용
         configuration.setAllowedMethods(Arrays.asList("*")); // 모든 HTTP 메서드 허용
 
