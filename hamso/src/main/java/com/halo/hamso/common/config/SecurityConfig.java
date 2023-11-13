@@ -64,6 +64,9 @@ public class SecurityConfig {
                 // 가계부 조회 ( 개발 단계에서는 누구나 가능하도록 설정 )
                 .antMatchers("/account-book/**").permitAll()
 
+                // 이미지 업로드
+                .antMatchers("/bill/image").permitAll()
+
                 // /admin으로 시작하는 요청은 ADMIN 권한이 있는 유저에게만 허용
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용

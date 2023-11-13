@@ -50,6 +50,8 @@ dependencies {
 	//HttpClient
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 
+	//S3 buket
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {
