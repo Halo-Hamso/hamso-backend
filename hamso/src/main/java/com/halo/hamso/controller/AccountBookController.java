@@ -27,11 +27,11 @@ public class AccountBookController {
     /**  데이터 입력 받기   */
     @RegisterResApi
     @RegisterReqApi
-    @PostMapping("/account-info")
-    public ResponseEntity<?> registerInfo(@RequestBody AccountInfoReqDto accountInfoReqDto){
+    @PostMapping("/account-info/{id}")
+    public ResponseEntity<?> registerInfo(@PathVariable("id") Long id, @RequestBody AccountInfoReqDto accountInfoReqDto){
         try{
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(accountBookService.registerInfo(accountInfoReqDto));
+                    .body(accountBookService.registerInfo(id, accountInfoReqDto));
         }
         catch (NotFoundException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

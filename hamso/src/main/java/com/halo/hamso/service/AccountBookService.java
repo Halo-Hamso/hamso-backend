@@ -5,12 +5,12 @@ import com.halo.hamso.dto.PageInfo;
 import com.halo.hamso.dto.account_book.AccountInfoPageResDto;
 import com.halo.hamso.dto.account_book.AccountInfoReqDto;
 import com.halo.hamso.dto.account_book.AccountInfoResDto;
-import com.halo.hamso.repository.account_book.AccountInfoRepository;
+import com.halo.hamso.dto.account_book.VisitedToCntResDto;
+import com.halo.hamso.repository.account_info.AccountInfoRepository;
 import com.halo.hamso.repository.account_info.AccountInfo;
 import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -28,8 +28,8 @@ public class AccountBookService {
 
 
     /**  조문객 조의금 db 저장  */
-    public String registerInfo(AccountInfoReqDto accountInfoReqDto) throws NotFoundException{
-        Member member =memberRepository.findById(accountInfoReqDto.getMemberId())
+    public String registerInfo(Long id, AccountInfoReqDto accountInfoReqDto) throws NotFoundException{
+        Member member =memberRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("회원을 찾을 수 없습니다."));
 
         AccountInfo accountInfo = AccountInfo.builder()
@@ -76,10 +76,12 @@ public class AccountBookService {
         List<AccountInfoResDto> results = infos.getContent().stream().map(o -> new AccountInfoResDto(o)
         ).collect(Collectors.toList());
 
+        List<VisitedToCntResDto> family = accountInfoRepository.findVisitedToCntResDtoJPQL();
 
         return AccountInfoPageResDto.builder()
                 .pageInfo(pageInfo)
                 .accountList(results)
+                .family(family)
                 .build();
     }
 
