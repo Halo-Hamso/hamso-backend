@@ -12,9 +12,6 @@ import lombok.NoArgsConstructor;
 @Schema(name = "부의금 정보")
 public class AccountInfoReqDto {
 
-    @Schema(example = "1")
-    private Long memberId;
-
     @Schema(example = "김땡땡")
     private String name;
 
