@@ -7,12 +7,15 @@ import com.halo.hamso.repository.account_book.AccountBook;
 import com.halo.hamso.repository.account_book.AccountBookRepository;
 import com.halo.hamso.repository.account_info.AccountInfoRepository;
 import com.halo.hamso.repository.account_info.AccountInfo;
+import com.halo.hamso.repository.bill_info.BillInfo;
+import com.halo.hamso.repository.bill_info.BillInfoRepository;
 import com.halo.hamso.repository.family.Family;
 import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
@@ -27,6 +30,7 @@ public class AccountBookService {
     private final AccountInfoRepository accountInfoRepository;
     private final AccountBookRepository accountBookRepository;
     private final MemberRepository memberRepository;
+    private final BillInfoRepository billInfoRepository;
 
 
     /**  조문객 조의금 db 저장  */
@@ -93,6 +97,41 @@ public class AccountBookService {
         return new StatisticsResDto(visitedToMoney, familyNameMoney);
     }
 
+    public BillInfoPageResDto getBillByItem(int page, int size){
+        Page<BillInfoByItemType> billPageInfos = billInfoRepository.findAllByItemJPQL(PageRequest.of(page,size));
 
+        PageInfo pageInfo= PageInfo.builder()
+                .page(page)
+                .pageSize(size)
+                .totalPages(billPageInfos.getTotalPages())
+                .totalNumber(billPageInfos.getTotalElements())
+                .build();
+
+        List<BillInfoByItemType> billInfos = billPageInfos.getContent();
+
+        return BillInfoPageResDto.builder()
+                .billInfos(billInfos)
+                .pageInfo(pageInfo)
+                .build();
+    }
+
+    public BillInfoPageResDto getBillByUseTime(int page, int size){
+        Page<BillInfo> billPageInfos = billInfoRepository.findAll(PageRequest.of(page,size,Sort.by(Sort.Direction.DESC,"useTime")));
+
+        PageInfo pageInfo= PageInfo.builder()
+                .page(page)
+                .pageSize(size)
+                .totalPages(billPageInfos.getTotalPages())
+                .totalNumber(billPageInfos.getTotalElements())
+                .build();
+
+        List<BillInfoByUseTime> billInfos = billPageInfos.getContent()
+                .stream().map(o->new BillInfoByUseTime(o)).collect(Collectors.toList());
+
+        return BillInfoPageResDto.builder()
+                .billInfos(billInfos)
+                .pageInfo(pageInfo)
+                .build();
+    }
 
 }

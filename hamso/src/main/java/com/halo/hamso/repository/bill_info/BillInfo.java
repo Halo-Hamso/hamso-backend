@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,9 +18,11 @@ public class BillInfo {
 
     private String itemType;
 
-    private String cost;
+    private Integer cost;
 
     private Integer count;
+
+    private LocalDateTime useTime;
 
     @JoinColumn(name = "accountBookId")
     @ManyToOne(fetch = FetchType.EAGER)

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 
 @Tag(name = "부의금 API", description = "부의금 등록, 조회")
 @RestController
@@ -41,7 +42,7 @@ public class AccountBookController {
 
 
 
-    /**  조문객 부의금 정보 전달 ( 페이징 ) */
+    /**  부의금 가계부 기능 */
 
     @AccountInfosReqApi
     @AccountInfosResApi
@@ -61,10 +62,29 @@ public class AccountBookController {
         }
     }
 
+    /** 부의금 가족, 방문 유족 통계 */
     @GetMapping("/statistics/{id}")
     public ResponseEntity<?> getStatistics(@PathVariable("id") Long id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountBookService.getStatistics(id));
     }
+
+    /** 용품별 결제 내역 */
+    @GetMapping("/bill/item")
+    public ResponseEntity<?> getBillByItem(@RequestParam("page") @Min(0) int page,
+                                           @RequestParam("size") @Min(0) int size){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountBookService.getBillByItem(page,size));
+    }
+
+
+    /** 실시간 결제 내역 */
+    @GetMapping("/bill/use-time")
+    public ResponseEntity<?> getBillByUseTime(@RequestParam("page") @Min(0) int page,
+                                              @RequestParam("size") @Min(0) int size){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountBookService.getBillByUseTime(page,size));
+    }
+
 
 }
