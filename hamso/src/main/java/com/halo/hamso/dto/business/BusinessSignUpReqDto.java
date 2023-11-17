@@ -16,5 +16,5 @@ public class BusinessSignUpReqDto {
     private String businessName;
     private String businessNo;
     private String businessType;
-    private String businessCategory;
+    private String businessItem;
 }

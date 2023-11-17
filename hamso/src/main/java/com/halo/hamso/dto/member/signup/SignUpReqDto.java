@@ -24,4 +24,7 @@ public class SignUpReqDto {
     @Schema(example = "기타")
     private String relation;
 
+    @Schema(example = "김땡땡 가족")
+    private String familyName;
+
 }
