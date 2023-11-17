@@ -2,6 +2,7 @@ package com.halo.hamso.repository.account_info;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.halo.hamso.common.AuditingField;
 import com.halo.hamso.repository.account_book.AccountBook;
 import com.halo.hamso.repository.member.Member;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Entity
-public class AccountInfo {
+public class AccountInfo extends AuditingField {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

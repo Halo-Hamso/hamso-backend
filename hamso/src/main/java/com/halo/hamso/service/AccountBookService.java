@@ -3,16 +3,17 @@ package com.halo.hamso.service;
 
 import com.halo.hamso.dto.PageInfo;
 import com.halo.hamso.dto.account_book.*;
+import com.halo.hamso.dto.chart.AllHourIntervalResDto;
+import com.halo.hamso.dto.chart.HourIntervalMoneyInfo;
 import com.halo.hamso.repository.account_book.AccountBook;
 import com.halo.hamso.repository.account_book.AccountBookRepository;
 import com.halo.hamso.repository.account_info.AccountInfoRepository;
 import com.halo.hamso.repository.account_info.AccountInfo;
 import com.halo.hamso.repository.bill_info.BillInfo;
 import com.halo.hamso.repository.bill_info.BillInfoRepository;
-import com.halo.hamso.repository.family.Family;
-import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -133,5 +135,28 @@ public class AccountBookService {
                 .pageInfo(pageInfo)
                 .build();
     }
+
+    public AllHourIntervalResDto getAccountByDateTime(LocalDate date, Integer option){
+
+
+        if(option == 0){ // 전체 조회
+
+            List<HourIntervalMoneyInfo> profits = accountInfoRepository.findByHourJPQL();
+            List<HourIntervalMoneyInfo> costs = billInfoRepository.findByHourJPQL();
+
+            return AllHourIntervalResDto.builder().profits(profits).costs(costs).build();
+        }
+        else if(option == 1){
+            List<HourIntervalMoneyInfo> profits = accountInfoRepository.findByHourJPQL();
+
+            return AllHourIntervalResDto.builder().profits(profits).costs(null).build();
+        }
+        else {
+            List<HourIntervalMoneyInfo> costs = billInfoRepository.findByHourJPQL();
+
+            return AllHourIntervalResDto.builder().profits(null).costs(costs).build();
+        }
+    }
+
 
 }

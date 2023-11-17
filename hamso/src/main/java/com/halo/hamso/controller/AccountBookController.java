@@ -9,13 +9,13 @@ import com.halo.hamso.utils.swagger.account.RegisterReqApi;
 import com.halo.hamso.utils.swagger.account.RegisterResApi;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
-
 import javax.validation.constraints.Min;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Tag(name = "부의금 API", description = "부의금 등록, 조회")
 @RestController
@@ -84,6 +84,13 @@ public class AccountBookController {
                                               @RequestParam("size") @Min(0) int size){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountBookService.getBillByUseTime(page,size));
+    }
+
+    @GetMapping("/chart")
+    public ResponseEntity<?> getAccountByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+                                              @RequestParam("option") Integer option){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountBookService.getAccountByDateTime(date,option));
     }
 
 
