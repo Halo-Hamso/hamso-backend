@@ -5,12 +5,10 @@ import com.halo.hamso.common.exception.InvalidPasswordException;
 import com.halo.hamso.common.exception.MemberDuplicateException;
 import com.halo.hamso.dto.business.BusinessLoginDto;
 import com.halo.hamso.dto.business.BusinessSignUpReqDto;
-import com.halo.hamso.dto.member.login.LoginReqDto;
+import com.halo.hamso.dto.business.FindDupReqDto;
 import com.halo.hamso.dto.member.login.LoginResDto;
-import com.halo.hamso.dto.member.signup.SignUpReqDto;
 import com.halo.hamso.dto.member.signup.SignUpResDto;
 import com.halo.hamso.repository.Authority.Authority;
-import com.halo.hamso.repository.account_book.AccountBook;
 import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import com.halo.hamso.utils.jwt.JwtProvider;
@@ -71,5 +69,14 @@ public class BusinessService {
                 .businessId(member.getBusinessId())
                 .role(member.getRoles().get(0).getName())
                 .build();
+    }
+
+    public Boolean findDuplicate(FindDupReqDto findDupReqDto){
+        if(memberRepository.findByBusinessId(findDupReqDto.getBusinessId()).isPresent()){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }

@@ -26,6 +26,8 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @FamilyApi
+    @FamilyResApi
     @GetMapping("/family")
     public ResponseEntity<?> giveFamilyName(){
         return ResponseEntity.status(HttpStatus.OK).body(authService.giveFamilyName());

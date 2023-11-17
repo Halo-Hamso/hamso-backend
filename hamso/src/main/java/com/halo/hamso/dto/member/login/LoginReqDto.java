@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Schema(name = "로그인 정보")
+@Schema(name = "유저 로그인 정보")
 public class LoginReqDto {
 
     @Schema(example = "01099267108")

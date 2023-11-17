@@ -5,15 +5,14 @@ import com.halo.hamso.common.exception.InvalidPasswordException;
 import com.halo.hamso.common.exception.MemberDuplicateException;
 import com.halo.hamso.dto.business.BusinessLoginDto;
 import com.halo.hamso.dto.business.BusinessSignUpReqDto;
-import com.halo.hamso.dto.member.login.LoginReqDto;
+import com.halo.hamso.dto.business.FindDupReqDto;
 import com.halo.hamso.dto.member.login.LoginResDto;
-import com.halo.hamso.dto.member.signup.SignUpReqDto;
 import com.halo.hamso.dto.member.signup.SignUpResDto;
 import com.halo.hamso.service.BusinessService;
-import com.halo.hamso.utils.swagger.auth.LoginReqApi;
-import com.halo.hamso.utils.swagger.auth.LoginResApi;
-import com.halo.hamso.utils.swagger.auth.SignUpReqApi;
 import com.halo.hamso.utils.swagger.auth.SignUpResApi;
+import com.halo.hamso.utils.swagger.business.DupApi;
+import com.halo.hamso.utils.swagger.business.LoginApi;
+import com.halo.hamso.utils.swagger.business.SignUpApi;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +34,8 @@ public class BusinessController {
 
 
     @PostMapping("/signup")
+    @SignUpApi
+    @SignUpResApi
     public ResponseEntity<?> createMember(@RequestBody BusinessSignUpReqDto businessSignUpReqDto){
 
         try{
@@ -53,6 +54,8 @@ public class BusinessController {
 
     /** 로그인 */
 
+    @LoginApi
+    @SignUpResApi
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody BusinessLoginDto businessLoginDto) {
         try {
@@ -68,6 +71,12 @@ public class BusinessController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(e.getMessage());
         }
+    }
+
+    @DupApi
+    @PostMapping("/id")
+    public Boolean findDuplicate(@RequestBody FindDupReqDto findDupReqDto){
+        return businessService.findDuplicate(findDupReqDto);
     }
 
 

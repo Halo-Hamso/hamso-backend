@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Schema(name = "회원정보")
+@Schema(name = "유저 회원 정보")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

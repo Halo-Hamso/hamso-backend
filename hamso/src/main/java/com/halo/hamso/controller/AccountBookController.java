@@ -7,6 +7,7 @@ import com.halo.hamso.utils.swagger.account.AccountInfosReqApi;
 import com.halo.hamso.utils.swagger.account.AccountInfosResApi;
 import com.halo.hamso.utils.swagger.account.RegisterReqApi;
 import com.halo.hamso.utils.swagger.account.RegisterResApi;
+import com.halo.hamso.utils.swagger.statistic.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -63,6 +64,8 @@ public class AccountBookController {
     }
 
     /** 부의금 가족, 방문 유족 통계 */
+    @ReqApi1
+    @ResApi1
     @GetMapping("/statistics/{id}")
     public ResponseEntity<?> getStatistics(@PathVariable("id") Long id){
         return ResponseEntity.status(HttpStatus.OK)
@@ -70,6 +73,8 @@ public class AccountBookController {
     }
 
     /** 용품별 결제 내역 */
+    @ReqApi2
+    @ResApi2
     @GetMapping("/bill/item")
     public ResponseEntity<?> getBillByItem(@RequestParam("page") @Min(0) int page,
                                            @RequestParam("size") @Min(0) int size){
@@ -79,6 +84,8 @@ public class AccountBookController {
 
 
     /** 실시간 결제 내역 */
+    @ReqApi3
+    @ResApi3
     @GetMapping("/bill/use-time")
     public ResponseEntity<?> getBillByUseTime(@RequestParam("page") @Min(0) int page,
                                               @RequestParam("size") @Min(0) int size){
@@ -86,6 +93,8 @@ public class AccountBookController {
                 .body(accountBookService.getBillByUseTime(page,size));
     }
 
+    @ReqApi4
+    @ResApi4
     @GetMapping("/chart")
     public ResponseEntity<?> getAccountByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
                                               @RequestParam("option") Integer option){

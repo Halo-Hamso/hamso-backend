@@ -1,4 +1,4 @@
-package com.halo.hamso.utils.swagger.account;
+package com.halo.hamso.utils.swagger.statistic;
 
 
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,7 +28,8 @@ import java.lang.annotation.RetentionPolicy;
                                                 "{\"familyName\": \"안땡땡가족\", \"money\": 2250}" +
                                                 "]}",
                                         summary = "성공 예제", description = "데이터를 성공적으로 조회한 경우의 예제입니다.")
-                        }))
+                        })),
+        @ApiResponse(responseCode = "400", description = "잘못된 요청 형식입니다.")
 })
-public @interface RegisterResApi {
+public @interface ResApi1 {
 }

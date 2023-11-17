@@ -12,12 +12,17 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "요청이 성공한 경우",
+        @ApiResponse(responseCode = "200", description = "로그인 성공",
                 content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                         examples = {
                                 @ExampleObject(name = "성공 예제",
-                                        value = "{\"phoneNo\": \"01099267107\", \"name\": \"안희찬\", \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTA5OTI2NzEwNyIsInJvbGVzIjpbXSwiaWF0IjoxNjk2NjY1NjE1LCJleHAiOjE2OTY2NjU3MDF9.0_fQo-uI_fn560Sp2rfyCs1Edn24FjTG_uOAUG6abVs\"}",
-                                        summary = "성공 예제", description = "요청이 성공한 경우의 예제입니다.")
+                                        value = "{\"memberId\": 1, " +
+                                                "\"phoneNo\": \"01099267107\", " +
+                                                "\"name\": \"안희찬\", " +
+                                                "\"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMDAxMiIsInJvbGVzIjpbeyJpZCI6MSwibmFtZSI6IlJPTEVfVVNFUiJ9XSwiaWF0IjoxNzAwMjM2NzA0LCJleHAiOjE3MDAyMzY3OTF9.XqCkaec3Cb030a5bjcn1w6q-HvNZPnlaWj2Dkhv7zX0\", " +
+                                                "\"role\": \"ROLE_USER\", " +
+                                                "\"businessId\": null}",
+                                        summary = "성공 예제", description = "회원 정보를 성공적으로 조회한 경우의 예제입니다.")
                         })),
         @ApiResponse(responseCode = "404", description = "요청이 실패한 경우.",
                 content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
