@@ -14,10 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 @Tag(name = "회원 인증 API", description = "회원가입, 로그인, 비밀번호 찾기, 아이디 중복 검사")
@@ -28,6 +25,11 @@ public class AuthController {
 
 
     private final AuthService authService;
+
+    @GetMapping("/family")
+    public ResponseEntity<?> giveFamilyName(){
+        return ResponseEntity.status(HttpStatus.OK).body(authService.giveFamilyName());
+    }
 
     /** 회원가입  */
     @SignUpReqApi
