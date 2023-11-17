@@ -32,15 +32,15 @@ public class ImageService {
 
 
     /** MultipartFile을 전달받아 File로 전환한 후 S3에 업로드  */
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException,Exception {
+    public Image upload(MultipartFile multipartFile, String dirName) throws IOException,Exception {
 
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
         String url=uploads(uploadFile,dirName);
 
-        imageRepository.save(Image.builder().url(url).build());
+
 
         //log.info("url:{}",imageResDto.getImageUrl());
-        return "업로드 완료";
+        return imageRepository.save(Image.builder().url(url).build());
     }
 
 

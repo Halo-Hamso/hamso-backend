@@ -1,6 +1,7 @@
 package com.halo.hamso.controller;
 
 
+import com.halo.hamso.repository.image.Image;
 import com.halo.hamso.service.ImageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class ImageController {
     public ResponseEntity<?> uploadAiInfoImage(
             @RequestParam(value = "image",required = true) MultipartFile files){
         try {
-            String ret = imageService.upload(files, "bill");
-            return ResponseEntity.status(HttpStatus.OK).body(ret);
+            Image image = imageService.upload(files, "bill");
+            return ResponseEntity.status(HttpStatus.OK).body(image);
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

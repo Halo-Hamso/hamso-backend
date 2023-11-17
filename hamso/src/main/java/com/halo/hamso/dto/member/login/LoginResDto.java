@@ -15,4 +15,6 @@ public class LoginResDto {
     private String phoneNo;
     private String name;
     private String token;
+    private String role;
+    private String businessId;
 }
