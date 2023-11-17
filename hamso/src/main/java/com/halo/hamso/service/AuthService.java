@@ -10,6 +10,9 @@ import com.halo.hamso.dto.member.signup.SignUpReqDto;
 import com.halo.hamso.dto.member.signup.SignUpResDto;
 import com.halo.hamso.repository.Authority.Authority;
 import com.halo.hamso.repository.account_book.AccountBook;
+import com.halo.hamso.repository.account_book.AccountBookRepository;
+import com.halo.hamso.repository.family.Family;
+import com.halo.hamso.repository.family.FamilyRepository;
 import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import com.halo.hamso.utils.jwt.JwtProvider;
@@ -21,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,8 +32,15 @@ import java.util.Optional;
 public class AuthService {
 
     private final MemberRepository memberRepository;
+    private final FamilyRepository familyRepository;
+    private final AccountBookRepository accountBookRepository;
     private final PasswordEncoder encoder;
     private final JwtProvider jwtProvider;
+
+    public List<Family> giveFamilyName(){
+        List<Family> familyList = familyRepository.findAll();
+        return familyList;
+    }
     @Transactional
     public SignUpResDto createMember(SignUpReqDto signUpReqDto) throws MemberDuplicateException{
 
@@ -39,7 +50,9 @@ public class AuthService {
             throw new MemberDuplicateException(signUpReqDto.getPhoneNo()+"는 이미 존재하는 번호입니다.");
         }
 
-
+        if(familyRepository.findByFamilyName(signUpReqDto.getFamilyName())==null){
+            familyRepository.save(new Family(signUpReqDto.getFamilyName()));
+        }
 
         Member member=Member.builder()
                 .name(signUpReqDto.getName())
@@ -54,9 +67,14 @@ public class AuthService {
         }
         else {
             member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
-        }
-        member.setAccountBook(Collections.singletonList(AccountBook.builder().totalMoney(0).build()));
 
+            //TODO: 장례식 1개만 서비스하는 걸 가정, 즉 회원가입은 오직 한 고인에 대해서만 한다. (이해 안되지만 일단 진행)
+            if(accountBookRepository.findAll().isEmpty()){
+                member.setAccountBook(Collections.singletonList(AccountBook.builder().totalProfit(0).totalCost(0).build()));
+            }
+        }
+
+        member.setFamilyName(signUpReqDto.getFamilyName());
         memberRepository.save(member);
 
         // Response 생성
@@ -83,7 +101,7 @@ public class AuthService {
                 .name(member.getName())
                 .phoneNo(memberInfo.getPhoneNo())
                 .token(jwtProvider.createToken(member.getPhoneNo(),member.getRoles()))
-                .role(member.getRoles().get(0).toString())
+                .role(member.getRoles().get(0).getName())
                 .build();
     }
 

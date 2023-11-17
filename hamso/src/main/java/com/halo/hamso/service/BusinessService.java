@@ -69,7 +69,7 @@ public class BusinessService {
                 .name(member.getName())
                 .token(jwtProvider.createToken(member.getPhoneNo(),member.getRoles()))
                 .businessId(member.getBusinessId())
-                .role(member.getRoles().get(0).toString())
+                .role(member.getRoles().get(0).getName())
                 .build();
     }
 }

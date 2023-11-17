@@ -56,7 +56,7 @@ public class SecurityConfig {
                 .antMatchers("/", "/swagger-ui/**", "/v3/**","/swagger-ui.html").permitAll()
 
                 // 로그인 회원가입은 누구나 가능하다.
-                .antMatchers("/auth/login","/auth/signup","/business/**").permitAll()
+                .antMatchers("/auth/login","/auth/signup","/business/**","/auth/family").permitAll()
 
                 // 문자 인증 번호 발생은 누구나 가능
                 .antMatchers("/sms/send").permitAll()
@@ -65,7 +65,7 @@ public class SecurityConfig {
                 .antMatchers("/account-book/**").permitAll()
 
                 // 이미지 업로드
-                .antMatchers("/bill/image").hasRole("BUSINESS")
+                .antMatchers("/bill/image").permitAll()
 
                 // 이미지 조회
                 .antMatchers("/bills").permitAll()
