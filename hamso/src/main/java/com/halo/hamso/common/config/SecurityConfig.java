@@ -56,7 +56,7 @@ public class SecurityConfig {
                 .antMatchers("/", "/swagger-ui/**", "/v3/**","/swagger-ui.html").permitAll()
 
                 // 로그인 회원가입은 누구나 가능하다.
-                .antMatchers("/auth/login","/auth/signup").permitAll()
+                .antMatchers("/auth/login","/auth/signup","/business/**").permitAll()
 
                 // 문자 인증 번호 발생은 누구나 가능
                 .antMatchers("/sms/send").permitAll()
@@ -65,7 +65,7 @@ public class SecurityConfig {
                 .antMatchers("/account-book/**").permitAll()
 
                 // 이미지 업로드
-                .antMatchers("/bill/image").permitAll()
+                .antMatchers("/bill/image").hasRole("BUSINESS")
 
                 // 이미지 조회
                 .antMatchers("/bills").permitAll()
@@ -74,6 +74,8 @@ public class SecurityConfig {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
                 .antMatchers("/user/**").hasRole("USER")
+
+
 
                 .anyRequest().authenticated(); // 위에서 설정한 API를 제외하고는 모두 JWT 필터를 거친다는 소리
 

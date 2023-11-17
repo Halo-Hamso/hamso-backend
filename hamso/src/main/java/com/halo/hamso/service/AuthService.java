@@ -83,6 +83,7 @@ public class AuthService {
                 .name(member.getName())
                 .phoneNo(memberInfo.getPhoneNo())
                 .token(jwtProvider.createToken(member.getPhoneNo(),member.getRoles()))
+                .role(member.getRoles().get(0).toString())
                 .build();
     }
 
