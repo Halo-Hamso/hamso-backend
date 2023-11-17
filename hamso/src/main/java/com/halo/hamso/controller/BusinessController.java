@@ -33,8 +33,7 @@ public class BusinessController {
 
     private final BusinessService businessService;
 
-    @SignUpReqApi
-    @SignUpResApi
+
     @PostMapping("/signup")
     public ResponseEntity<?> createMember(@RequestBody BusinessSignUpReqDto businessSignUpReqDto){
 
@@ -53,8 +52,7 @@ public class BusinessController {
 
 
     /** 로그인 */
-    @LoginReqApi
-    @LoginResApi
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody BusinessLoginDto businessLoginDto) {
         try {
