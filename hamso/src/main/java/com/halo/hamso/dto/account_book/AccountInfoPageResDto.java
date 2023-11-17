@@ -14,5 +14,4 @@ import java.util.List;
 public class AccountInfoPageResDto {
     private PageInfo pageInfo;
     private List<AccountInfoResDto> accountList;
-    private List<VisitedToCntResDto> family;
 }

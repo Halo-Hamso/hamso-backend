@@ -37,11 +37,13 @@ public class AccountInfo {
     @Column(nullable = false)
     private String relation;
 
+    private String familyName;
+
     @Column(nullable = false)
     private Integer money;
 
     @JoinColumn(name = "accountBookId")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private AccountBook accountBook;
 
     @Builder
@@ -52,5 +54,9 @@ public class AccountInfo {
         this.relation = relation;
         this.money = money;
         this.accountBook = accountBook;
+    }
+
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
     }
 }

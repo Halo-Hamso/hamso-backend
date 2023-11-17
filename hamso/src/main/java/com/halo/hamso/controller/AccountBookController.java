@@ -61,4 +61,10 @@ public class AccountBookController {
         }
     }
 
+    @GetMapping("/statistics/{id}")
+    public ResponseEntity<?> getStatistics(@PathVariable("id") Long id){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountBookService.getStatistics(id));
+    }
+
 }

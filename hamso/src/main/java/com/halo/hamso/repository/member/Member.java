@@ -50,8 +50,10 @@ public class Member {
     private String businessType;
 
     @Column(nullable = true)
-    private String businessCategory;
+    private String businessItem;
 
+    @Column(nullable = true)
+    private String familyName;
 
 
 
@@ -60,6 +62,8 @@ public class Member {
 
     @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<AccountBook> accountBook = new ArrayList<>();
+
+
 
 
     /** 일반 회원 가입 */
@@ -80,7 +84,7 @@ public class Member {
         this.businessName = dto.getBusinessName();
         this.businessNo = dto.getBusinessNo();
         this.businessType = dto.getBusinessType();
-        this.businessCategory = dto.getBusinessCategory();
+        this.businessItem = dto.getBusinessItem();
     }
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -99,5 +103,9 @@ public class Member {
     }
     public void setPassword(String password){
         this.password=password;
+    }
+
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
     }
 }
