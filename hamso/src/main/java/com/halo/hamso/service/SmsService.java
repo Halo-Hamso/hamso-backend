@@ -12,6 +12,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -23,6 +24,7 @@ public class SmsService {
 
     private final MakeSmsRequest makeSmsRequest;
     /** 인증코드 생성 및 네이버 클라우드에 요청 보내기 */
+    @Transactional
     public String sendSms(MessageDto messageDto) throws Exception{
 
         // 1. 네이버 클라우드 API에게 보낼 메시지와 Code 생성

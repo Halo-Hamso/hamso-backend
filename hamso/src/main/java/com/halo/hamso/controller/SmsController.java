@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/sms")
-@Slf4j
 @Tag(name = "문자 인증 API", description = "번호로 문자 인증 API")
+@Slf4j
 public class SmsController {
 
     private final SmsService smsService;
-//    private final HttpSession session;
     /** 해당하는 번호로 인증번호 발송하기 */
 
     @SmsSendReqApi
@@ -29,8 +28,9 @@ public class SmsController {
     @PostMapping("/send")
     public ResponseEntity<?> sendSMS(@RequestBody MessageDto messageDto){
         try{
+            log.info("sms 문자 보내기 시작");
             String code = smsService.sendSms(messageDto);
-//            session.setAttribute("rand", code);
+            log.info("sms 문자 보내기 종료");
             return ResponseEntity.status(HttpStatus.OK)
                     .body(smsService.sendSms(messageDto));
         }
@@ -40,20 +40,4 @@ public class SmsController {
         }
 
     }
-
-
-    /** 인증번호 검증  test 용 */
-//    @GetMapping("/check")
-//    public ResponseEntity<Boolean> phoneAuthOk(@RequestParam String code) {
-//        String rand = (String) session.getAttribute("rand");
-//
-//        log.info("rand = {}, code = {}", rand, code);
-//
-//        if (rand.equals(code)) {
-//            session.removeAttribute("rand");
-//            return new ResponseEntity<>(true, HttpStatus.OK);
-//        }
-//
-//        return new ResponseEntity<>(false, HttpStatus.OK);
-//    }
 }
