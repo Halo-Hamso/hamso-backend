@@ -76,17 +76,4 @@ public class BusinessController {
     public Boolean findDuplicate(@RequestBody FindDupReqDto findDupReqDto){
         return businessService.findDuplicate(findDupReqDto);
     }
-
-    /**  견적서 데이터 입력받기  */
-    @PostMapping("/bill-info/{id}")
-    public ResponseEntity<?> registerBillInfo(@PathVariable("id") Long id, @RequestBody BillInfoReqDto billInfoReqDto) {
-        try{
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(businessService.billRegisterInfo(id, billInfoReqDto));
-        }
-        catch (NotFoundException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(e.getMessage());
-        }
-    }
 }

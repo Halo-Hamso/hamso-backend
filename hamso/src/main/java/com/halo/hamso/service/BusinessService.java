@@ -87,22 +87,4 @@ public class BusinessService {
         }
     }
 
-    @Transactional
-    public String billRegisterInfo(Long id, BillInfoReqDto billInfoReqDto) throws  NotFoundException {
-        AccountBook accountBook =accountBookRepository.findById(id)
-                .orElseThrow(()->new NotFoundException("회원을 찾을 수 없습니다."));
-
-        BillInfo billInfo = BillInfo.builder()
-                .itemType(billInfoReqDto.getItemType())
-                .cost(billInfoReqDto.getCost())
-                .count(billInfoReqDto.getCount())
-                .useTime(billInfoReqDto.getUseTime())
-                .accountBook(accountBook)
-                .build();
-
-        billInfo.getAccountBook().setTotalExpenditure(billInfo.getCost() * billInfo.getCount());
-
-        billInfoRepository.save(billInfo);
-        return "견적서 데이터 저장 성공";
-    }
 }

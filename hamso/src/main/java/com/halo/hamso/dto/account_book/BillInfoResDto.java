@@ -11,8 +11,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Builder
 @Schema(name = "견적서 정보")
-public class BillInfoReqDto {
+public class BillInfoResDto {
 
     @Schema(example = "식사")
     private String itemType;
