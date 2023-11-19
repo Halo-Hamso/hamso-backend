@@ -1,5 +1,6 @@
 package com.halo.hamso.repository.member;
 
+import com.halo.hamso.repository.account_book.AccountBook;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.awt.*;
@@ -10,4 +11,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Optional<Member> findByBusinessId(String businessId);
 
     Member findByName(String name);
+
+    Member findByAccountBook(AccountBook accountBook);
 }

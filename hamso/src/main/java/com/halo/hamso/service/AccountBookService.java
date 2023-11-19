@@ -11,9 +11,9 @@ import com.halo.hamso.repository.account_info.AccountInfoRepository;
 import com.halo.hamso.repository.account_info.AccountInfo;
 import com.halo.hamso.repository.bill_info.BillInfo;
 import com.halo.hamso.repository.bill_info.BillInfoRepository;
+import com.halo.hamso.repository.family.FamilyRepository;
 import com.halo.hamso.repository.member.MemberRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -33,13 +33,15 @@ public class AccountBookService {
     private final AccountBookRepository accountBookRepository;
     private final MemberRepository memberRepository;
     private final BillInfoRepository billInfoRepository;
+    private final FamilyRepository familyRepository;
+
 
 
     /**  조문객 조의금 db 저장  */
     @Transactional
     public String registerInfo(Long id, AccountInfoReqDto accountInfoReqDto) throws NotFoundException{
         AccountBook accountBook =accountBookRepository.findById(id)
-                .orElseThrow(()->new NotFoundException("회원을 찾을 수 없습니다."));
+                .orElseThrow(()->new NotFoundException("가계부를 찾을 수 없습니다."));
 
         AccountInfo accountInfo = AccountInfo.builder()
                 .name(accountInfoReqDto.getName())
@@ -51,7 +53,10 @@ public class AccountBookService {
                 .build();
 
         accountInfo.getAccountBook().setTotalProfit(accountInfo.getMoney());
-        accountInfo.setFamilyName(memberRepository.findByName(accountInfoReqDto.getVisitedTo()).getFamilyName());
+        accountInfo.setFamilyName(
+                familyRepository.findByName(accountInfoReqDto.getVisitedTo()).orElseThrow(()->new NotFoundException("방문 유족이 가족에 등록되어 있지 않습니다. 가족에 등록 하고 다시 시도해 주세요"))
+                        .getFamilyName()
+        );
 
         accountInfoRepository.save(accountInfo);
         return "부의금 데이터 저장 성공";
@@ -63,7 +68,7 @@ public class AccountBookService {
     public AccountInfoPageResDto getAccountBook(Long id, int page, int size, String s) throws NotFoundException
     {
         AccountBook accountBook =accountBookRepository.findById(id)
-                .orElseThrow(()->new NotFoundException("회원을 찾을 수 없습니다."));
+                .orElseThrow(()->new NotFoundException("가계부를 찾을 수 없습니다."));
 
         Page<AccountInfo> infos;
         // 검색 x

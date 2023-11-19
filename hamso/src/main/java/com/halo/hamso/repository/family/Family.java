@@ -18,9 +18,13 @@ public class Family {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    private String name;
+
     private String familyName;
 
-    public Family(String familyName) {
+    public Family(String name, String familyName) {
+        this.name = name;
         this.familyName = familyName;
     }
 }

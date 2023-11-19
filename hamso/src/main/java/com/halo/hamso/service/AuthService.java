@@ -51,7 +51,7 @@ public class AuthService {
         }
 
         if(familyRepository.findByFamilyName(signUpReqDto.getFamilyName())==null){
-            familyRepository.save(new Family(signUpReqDto.getFamilyName()));
+            familyRepository.save(new Family( signUpReqDto.getName(),signUpReqDto.getFamilyName()));
         }
 
         Member member=Member.builder()
