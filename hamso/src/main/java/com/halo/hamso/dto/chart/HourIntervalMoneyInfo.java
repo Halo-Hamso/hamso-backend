@@ -2,8 +2,10 @@ package com.halo.hamso.dto.chart;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class HourIntervalMoneyInfo {
     private String date;

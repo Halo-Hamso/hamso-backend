@@ -147,21 +147,32 @@ public class AccountBookService {
         if(option == 0){ // 전체 조회
 
             List<HourIntervalMoneyInfo> profits = accountInfoRepository.findByHourJPQL();
+            for(HourIntervalMoneyInfo elem : profits){
+                elem.setDate(elem.getDate().substring(11,16));
+            }
             List<HourIntervalMoneyInfo> costs = billInfoRepository.findByHourJPQL();
+            for(HourIntervalMoneyInfo elem : costs){
+                elem.setDate(elem.getDate().substring(11,16));
+            }
 
             return AllHourIntervalResDto.builder().profits(profits).costs(costs).build();
         }
         else if(option == 1){
             List<HourIntervalMoneyInfo> profits = accountInfoRepository.findByHourJPQL();
+            for(HourIntervalMoneyInfo elem : profits){
+                elem.setDate(elem.getDate().substring(11,16));
+            }
 
             return AllHourIntervalResDto.builder().profits(profits).costs(null).build();
         }
         else {
             List<HourIntervalMoneyInfo> costs = billInfoRepository.findByHourJPQL();
+            for(HourIntervalMoneyInfo elem : costs){
+                elem.setDate(elem.getDate().substring(11,16));
+            }
 
             return AllHourIntervalResDto.builder().profits(null).costs(costs).build();
         }
     }
-
 
 }
