@@ -116,7 +116,7 @@ public class AccountBookController {
                     .body(billInfoResDto);
         }
         catch (NotFoundException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(e.getMessage());
         }
     }

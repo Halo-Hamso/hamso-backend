@@ -187,12 +187,6 @@ public class AccountBookService {
     @Transactional
     public BillInfoResDto billRegisterInfo(Long id, BillInfoReqDto billInfoReqDto) throws  NotFoundException {
 
-        // 시간 중복 확인
-//        Optional<BillInfo> checkBillTime = accountBookRepository.findByUseTime(billInfoReqDto.getUseTime());
-//        if (checkBillTime.isPresent()) {
-//            throw new TimeDuplicateException(billInfoReqDto.getUseTime() + "는 이미 존재하는 시간입니다.");
-//        }
-
         AccountBook accountBook = accountBookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("가계부를 찾을 수 없습니다."));
 
@@ -204,10 +198,10 @@ public class AccountBookService {
                 .accountBook(accountBook)
                 .build();
 
-        billInfo.getAccountBook().setTotalExpenditure(billInfo.getCost() * billInfo.getCount());
+        billInfo.getAccountBook().setTotalCost(billInfo.getCost() * billInfo.getCount());
         billInfoRepository.save(billInfo);
 
-        // Response 생셩
+        // Response 생성
         return BillInfoResDto.builder()
                 .itemType(billInfo.getItemType())
                 .cost(billInfo.getCost())
