@@ -14,6 +14,7 @@ import com.halo.hamso.repository.bill_info.BillInfoRepository;
 import com.halo.hamso.repository.family.FamilyRepository;
 import com.halo.hamso.repository.member.MemberRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,11 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AccountBookService {
 
     private final AccountInfoRepository accountInfoRepository;
@@ -141,16 +144,17 @@ public class AccountBookService {
                 .build();
     }
 
-    public AllHourIntervalResDto getAccountByDateTime(LocalDate date, Integer option){
+    public AllHourIntervalResDto getAccountByDateTime(Date date, Integer option){
 
+        log.info("date: {}", date);
 
         if(option == 0){ // 전체 조회
 
-            List<HourIntervalMoneyInfo> profits = accountInfoRepository.findByHourJPQL();
+            List<HourIntervalMoneyInfo> profits = accountInfoRepository.findByHourJPQL(date);
             for(HourIntervalMoneyInfo elem : profits){
                 elem.setDate(elem.getDate().substring(11,16));
             }
-            List<HourIntervalMoneyInfo> costs = billInfoRepository.findByHourJPQL();
+            List<HourIntervalMoneyInfo> costs = billInfoRepository.findByHourJPQL(date);
             for(HourIntervalMoneyInfo elem : costs){
                 elem.setDate(elem.getDate().substring(11,16));
             }
@@ -158,7 +162,7 @@ public class AccountBookService {
             return AllHourIntervalResDto.builder().profits(profits).costs(costs).build();
         }
         else if(option == 1){
-            List<HourIntervalMoneyInfo> profits = accountInfoRepository.findByHourJPQL();
+            List<HourIntervalMoneyInfo> profits = accountInfoRepository.findByHourJPQL(date);
             for(HourIntervalMoneyInfo elem : profits){
                 elem.setDate(elem.getDate().substring(11,16));
             }
@@ -166,7 +170,7 @@ public class AccountBookService {
             return AllHourIntervalResDto.builder().profits(profits).costs(null).build();
         }
         else {
-            List<HourIntervalMoneyInfo> costs = billInfoRepository.findByHourJPQL();
+            List<HourIntervalMoneyInfo> costs = billInfoRepository.findByHourJPQL(date);
             for(HourIntervalMoneyInfo elem : costs){
                 elem.setDate(elem.getDate().substring(11,16));
             }

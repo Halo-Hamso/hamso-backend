@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 import javax.validation.constraints.Min;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Tag(name = "부의금 API", description = "부의금 등록, 조회")
 @RestController
@@ -96,7 +97,7 @@ public class AccountBookController {
     @ReqApi4
     @ResApi4
     @GetMapping("/chart")
-    public ResponseEntity<?> getAccountByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+    public ResponseEntity<?> getAccountByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                                               @RequestParam("option") Integer option){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(accountBookService.getAccountByDateTime(date,option));

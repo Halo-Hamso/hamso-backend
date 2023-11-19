@@ -8,7 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -34,10 +36,11 @@ public interface AccountInfoRepository extends JpaRepository<AccountInfo,Long> {
             "SELECT "
             +"new com.halo.hamso.dto.chart.HourIntervalMoneyInfo(function('date_format', ai.createdAt,'%Y-%m-%d %H:00:00'), SUM(ai.money)) "
             +"FROM AccountInfo ai "
+            +"WHERE date(ai.createdAt) = :localDate "
             +"GROUP BY function('date_format', ai.createdAt,'%Y-%m-%d %H:00:00') "
             +"ORDER BY function('date_format', ai.createdAt,'%Y-%m-%d %H:00:00') "
     )
-    List<HourIntervalMoneyInfo> findByHourJPQL();
+    List<HourIntervalMoneyInfo> findByHourJPQL(@Param("localDate") Date localDate);
 
     Page<AccountInfo> findAllByAccountBook(AccountBook accountBook, Pageable pageable);
     Page<AccountInfo> findAllByTeamOrVisitedToOrRelationOrName(String s1,String s2,String s3, String s4,Pageable pageable);

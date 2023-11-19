@@ -9,7 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BillInfoRepository extends JpaRepository<BillInfo,Long> {
@@ -26,10 +28,11 @@ public interface BillInfoRepository extends JpaRepository<BillInfo,Long> {
             "SELECT "
                     +"new com.halo.hamso.dto.chart.HourIntervalMoneyInfo(function('date_format', b.useTime,'%Y-%m-%d %H:00:00'), SUM(b.cost)) "
                     +"FROM BillInfo b "
+                    +"WHERE DATE(b.useTime) = :date "
                     +"GROUP BY function('date_format', b.useTime,'%Y-%m-%d %H:00:00') "
                     +"ORDER BY function('date_format', b.useTime,'%Y-%m-%d %H:00:00') "
     )
-    List<HourIntervalMoneyInfo> findByHourJPQL();
+    List<HourIntervalMoneyInfo> findByHourJPQL(@Param("date")Date date);
 
     Page<BillInfo> findAll(Pageable pageable);
 }
