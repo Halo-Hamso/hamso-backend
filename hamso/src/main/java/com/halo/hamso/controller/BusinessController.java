@@ -3,6 +3,7 @@ package com.halo.hamso.controller;
 
 import com.halo.hamso.common.exception.InvalidPasswordException;
 import com.halo.hamso.common.exception.MemberDuplicateException;
+import com.halo.hamso.dto.account_book.BillInfoReqDto;
 import com.halo.hamso.dto.business.BusinessLoginDto;
 import com.halo.hamso.dto.business.BusinessSignUpReqDto;
 import com.halo.hamso.dto.business.FindDupReqDto;
@@ -17,10 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 
@@ -78,6 +76,4 @@ public class BusinessController {
     public Boolean findDuplicate(@RequestBody FindDupReqDto findDupReqDto){
         return businessService.findDuplicate(findDupReqDto);
     }
-
-
 }

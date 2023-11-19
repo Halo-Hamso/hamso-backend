@@ -3,12 +3,17 @@ package com.halo.hamso.service;
 
 import com.halo.hamso.common.exception.InvalidPasswordException;
 import com.halo.hamso.common.exception.MemberDuplicateException;
+import com.halo.hamso.dto.account_book.BillInfoReqDto;
 import com.halo.hamso.dto.business.BusinessLoginDto;
 import com.halo.hamso.dto.business.BusinessSignUpReqDto;
 import com.halo.hamso.dto.business.FindDupReqDto;
 import com.halo.hamso.dto.member.login.LoginResDto;
 import com.halo.hamso.dto.member.signup.SignUpResDto;
 import com.halo.hamso.repository.Authority.Authority;
+import com.halo.hamso.repository.account_book.AccountBook;
+import com.halo.hamso.repository.account_book.AccountBookRepository;
+import com.halo.hamso.repository.bill_info.BillInfo;
+import com.halo.hamso.repository.bill_info.BillInfoRepository;
 import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import com.halo.hamso.utils.jwt.JwtProvider;
@@ -26,6 +31,8 @@ import java.util.Optional;
 public class BusinessService {
 
     private final MemberRepository memberRepository;
+    private final AccountBookRepository accountBookRepository;
+    private final BillInfoRepository billInfoRepository;
     private final PasswordEncoder encoder;
     private final JwtProvider jwtProvider;
 
@@ -79,4 +86,5 @@ public class BusinessService {
             return true;
         }
     }
+
 }

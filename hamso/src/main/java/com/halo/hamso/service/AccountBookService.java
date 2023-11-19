@@ -1,6 +1,8 @@
 package com.halo.hamso.service;
 
 
+import com.halo.hamso.common.exception.MemberDuplicateException;
+import com.halo.hamso.common.exception.TimeDuplicateException;
 import com.halo.hamso.dto.PageInfo;
 import com.halo.hamso.dto.account_book.*;
 import com.halo.hamso.dto.chart.AllHourIntervalResDto;
@@ -12,6 +14,7 @@ import com.halo.hamso.repository.account_info.AccountInfo;
 import com.halo.hamso.repository.bill_info.BillInfo;
 import com.halo.hamso.repository.bill_info.BillInfoRepository;
 import com.halo.hamso.repository.family.FamilyRepository;
+import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +28,7 @@ import org.webjars.NotFoundException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -177,6 +181,39 @@ public class AccountBookService {
 
             return AllHourIntervalResDto.builder().profits(null).costs(costs).build();
         }
+
+    }
+
+    @Transactional
+    public BillInfoResDto billRegisterInfo(Long id, BillInfoReqDto billInfoReqDto) throws  NotFoundException {
+
+        // 시간 중복 확인
+//        Optional<BillInfo> checkBillTime = accountBookRepository.findByUseTime(billInfoReqDto.getUseTime());
+//        if (checkBillTime.isPresent()) {
+//            throw new TimeDuplicateException(billInfoReqDto.getUseTime() + "는 이미 존재하는 시간입니다.");
+//        }
+
+        AccountBook accountBook = accountBookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("가계부를 찾을 수 없습니다."));
+
+        BillInfo billInfo = BillInfo.builder()
+                .itemType(billInfoReqDto.getItemType())
+                .cost(billInfoReqDto.getCost())
+                .count(billInfoReqDto.getCount())
+                .useTime(billInfoReqDto.getUseTime())
+                .accountBook(accountBook)
+                .build();
+
+        billInfo.getAccountBook().setTotalExpenditure(billInfo.getCost() * billInfo.getCount());
+        billInfoRepository.save(billInfo);
+
+        // Response 생셩
+        return BillInfoResDto.builder()
+                .itemType(billInfo.getItemType())
+                .cost(billInfo.getCost())
+                .count(billInfo.getCount())
+                .useTime(billInfo.getUseTime())
+                .build();
     }
 
 }

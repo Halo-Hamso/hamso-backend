@@ -2,6 +2,8 @@ package com.halo.hamso.controller;
 
 
 import com.halo.hamso.dto.account_book.AccountInfoReqDto;
+import com.halo.hamso.dto.account_book.BillInfoReqDto;
+import com.halo.hamso.dto.account_book.BillInfoResDto;
 import com.halo.hamso.service.AccountBookService;
 import com.halo.hamso.utils.swagger.account.AccountInfosReqApi;
 import com.halo.hamso.utils.swagger.account.AccountInfosResApi;
@@ -103,5 +105,20 @@ public class AccountBookController {
                 .body(accountBookService.getAccountByDateTime(date,option));
     }
 
+    /**  견적서 데이터 입력받기  */
+    @PostMapping("/bill-info/{id}")
+    public ResponseEntity<?> registerBillInfo(@PathVariable("id") Long id, @RequestBody BillInfoReqDto billInfoReqDto) {
+
+        try{
+            BillInfoResDto billInfoResDto = accountBookService.billRegisterInfo(id, billInfoReqDto);
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(billInfoResDto);
+        }
+        catch (NotFoundException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
+    }
 
 }
