@@ -70,7 +70,7 @@ public class AuthService {
 
             //TODO: 장례식 1개만 서비스하는 걸 가정, 즉 회원가입은 오직 한 고인에 대해서만 한다. (이해 안되지만 일단 진행)
             if(accountBookRepository.findAll().isEmpty()){
-                member.setAccountBook(Collections.singletonList(AccountBook.builder().totalProfit(0).totalCost(0).build()));
+                member.setAccountBook(Collections.singletonList(AccountBook.builder().totalProfit(0).totalCost(0).totalExpenditure(0).build()));
             }
         }
 
