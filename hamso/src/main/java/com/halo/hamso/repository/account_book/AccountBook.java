@@ -56,8 +56,4 @@ public class AccountBook extends AuditingField {
     public void setTotalProfit(Integer totalProfit) {
         this.totalProfit = totalProfit + this.totalProfit;
     }
-
-    public void setTotalExpenditure(Integer totalExpenditure) {
-        this.totalExpenditure = totalExpenditure + this.totalExpenditure;
-    }
 }
