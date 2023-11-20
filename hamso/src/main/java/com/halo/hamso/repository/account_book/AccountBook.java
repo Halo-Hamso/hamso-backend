@@ -32,8 +32,6 @@ public class AccountBook extends AuditingField {
     @Column(nullable = false)
     private Integer totalCost;
 
-    @Column(nullable = false)
-    private Integer totalExpenditure;
 
     @JoinColumn(name = "memberId")
     @ManyToOne(fetch = FetchType.LAZY)

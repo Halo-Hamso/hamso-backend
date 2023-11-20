@@ -1,8 +1,7 @@
 package com.halo.hamso.service;
 
 
-import com.halo.hamso.common.exception.MemberDuplicateException;
-import com.halo.hamso.common.exception.TimeDuplicateException;
+
 import com.halo.hamso.dto.PageInfo;
 import com.halo.hamso.dto.account_book.*;
 import com.halo.hamso.dto.chart.AllHourIntervalResDto;
@@ -14,7 +13,6 @@ import com.halo.hamso.repository.account_info.AccountInfo;
 import com.halo.hamso.repository.bill_info.BillInfo;
 import com.halo.hamso.repository.bill_info.BillInfoRepository;
 import com.halo.hamso.repository.family.FamilyRepository;
-import com.halo.hamso.repository.member.Member;
 import com.halo.hamso.repository.member.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -101,6 +97,7 @@ public class AccountBookService {
         return AccountInfoPageResDto.builder()
                 .pageInfo(pageInfo)
                 .accountList(results)
+                .totalMoney(accountBook.getTotalProfit())
                 .build();
     }
 
