@@ -13,4 +13,5 @@ import java.util.List;
 public class StatisticsResDto {
     List<VisitedToCntResDto> visitedToMoney;
     List<FamilyCntResDto> familyNameMoney;
+    private Long totalMoney;
 }

@@ -104,8 +104,12 @@ public class AccountBookService {
     public StatisticsResDto getStatistics(Long id){
         List<VisitedToCntResDto> visitedToMoney = accountInfoRepository.findVisitedToCntResDtoJPQL();
         List<FamilyCntResDto> familyNameMoney = accountInfoRepository.findFamilyCntResDtoJPQL();
+        Long totalMoney = 0L;
+        for(FamilyCntResDto elem:familyNameMoney){
+            totalMoney = totalMoney + elem.getMoney();
+        }
 
-        return new StatisticsResDto(visitedToMoney, familyNameMoney);
+        return new StatisticsResDto(visitedToMoney, familyNameMoney,totalMoney);
     }
 
     public BillInfoPageResDto getBillByItem(int page, int size){
