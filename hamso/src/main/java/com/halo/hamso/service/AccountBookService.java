@@ -76,7 +76,7 @@ public class AccountBookService {
         Page<AccountInfo> infos;
         // 검색 x
         if(s==null){
-            infos = accountInfoRepository.findAllByAccountBook(accountBook,PageRequest.of(page,size));
+            infos = accountInfoRepository.findAllByAccountBook(accountBook,PageRequest.of(page,size,Sort.by(Sort.Direction.DESC,"createdAt")));
         }
 
         // 검색 o

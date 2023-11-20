@@ -20,7 +20,7 @@ public interface AccountInfoRepository extends JpaRepository<AccountInfo,Long> {
             "SELECT "
             +"new com.halo.hamso.dto.account_book.VisitedToCntResDto(a.visitedTo, SUM(a.money)) "
             +"FROM AccountInfo a "
-            +"GROUP BY a.visitedTo"
+            +"GROUP BY a.visitedTo "
     )
     List<VisitedToCntResDto> findVisitedToCntResDtoJPQL();
 
